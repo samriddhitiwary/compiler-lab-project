@@ -52,6 +52,9 @@ export default function GrammarInput({
         <button type="button" onClick={() => onLoadSample('conflict')}>
           Load Conflict Sample
         </button>
+        <button type="button" onClick={() => onLoadSample('multiCharacter')}>
+          Load Multi-Char Sample
+        </button>
         <button type="button" className="primary" onClick={onValidate}>
           Validate Grammar
         </button>

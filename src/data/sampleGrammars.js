@@ -11,6 +11,11 @@ A -> b`,
 A -> c`,
   conflict: `S -> aA | Aa
 A -> a`,
+  genericValid: `S -> aA | b
+A -> a`,
+  multiCharacter: `Expr -> Expr '+' Term | Term
+Term -> Term '*' Factor | Factor
+Factor -> '(' Expr ')' | 'id'`,
 }
 
 export const testCases = [
@@ -38,5 +43,10 @@ export const testCases = [
     name: 'Conflict grammar',
     grammar: sampleGrammars.conflict,
     expected: 'Valid operator grammar syntax, but precedence table reports a conflict for a and a.',
+  },
+  {
+    name: 'Multi-character grammar',
+    grammar: sampleGrammars.multiCharacter,
+    expected: 'Recognizes Expr, Term, Factor and tokenizes id + id * id as id + id * id.',
   },
 ]

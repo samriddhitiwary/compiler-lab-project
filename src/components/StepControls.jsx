@@ -1,4 +1,4 @@
-export default function StepControls({ label, index, total, onPrevious, onNext, onAll, onReset, disabled }) {
+export default function StepControls({ label, index, total, onPrevious, onNext, onAll, onReset, disabled, allLabel = 'Compute All' }) {
   const displayIndex = total === 0 ? 0 : Math.min(index, total)
 
   return (
@@ -14,7 +14,7 @@ export default function StepControls({ label, index, total, onPrevious, onNext, 
           Next Step
         </button>
         <button type="button" onClick={onAll} disabled={disabled || total === 0}>
-          Compute All
+          {allLabel}
         </button>
         <button type="button" className="ghost" onClick={onReset} disabled={disabled || index === 0}>
           Reset Steps

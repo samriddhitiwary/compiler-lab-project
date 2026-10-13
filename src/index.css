@@ -54,7 +54,8 @@ button.ghost {
 }
 
 textarea,
-select {
+select,
+input {
   width: 100%;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
@@ -72,6 +73,10 @@ textarea {
 
 select {
   padding: 0.7rem 0.8rem;
+}
+
+input {
+  padding: 0.75rem 0.85rem;
 }
 
 h1,
@@ -234,7 +239,7 @@ pre,
 
 .stage-indicator {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 0.75rem;
   margin-bottom: 1rem;
 }
@@ -417,6 +422,117 @@ th {
   padding-left: 0;
 }
 
+.string-input {
+  margin-bottom: 1rem;
+}
+
+.parser-input-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto;
+  gap: 0.75rem;
+}
+
+.token-preview {
+  margin-top: 0.75rem;
+  color: #3158b7;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+}
+
+.stack-box-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.stack-box {
+  display: inline-grid;
+  min-width: 2.5rem;
+  min-height: 2.4rem;
+  place-items: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  padding: 0.35rem 0.55rem;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-weight: 800;
+}
+
+.terminal-box {
+  color: #16304f;
+  background: #edf4ff;
+}
+
+.nonterminal-box {
+  color: #105c39;
+  background: #effaf4;
+}
+
+.top-terminal-box {
+  border-color: #e6ad18;
+  box-shadow: 0 0 0 3px #fff2c7;
+}
+
+.handle-box {
+  border-color: #d6336c;
+  color: #842029;
+  background: #ffe8f0;
+}
+
+.parse-step-card {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fbfcff;
+}
+
+.parse-facts {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.parse-facts div {
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  padding: 0.75rem;
+  background: #ffffff;
+}
+
+.parse-facts span {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #5b6778;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.parse-facts strong {
+  overflow-wrap: anywhere;
+}
+
+.shift-action {
+  color: #3158b7;
+  font-weight: 900;
+}
+
+.reduce-action {
+  color: #105c39;
+  font-weight: 900;
+}
+
+details.panel summary {
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.viva-list {
+  margin-bottom: 0;
+  color: #334155;
+}
+
 @media (max-width: 860px) {
   .site-header,
   .hero-panel,
@@ -430,7 +546,9 @@ th {
   .stage-indicator,
   .split-grid,
   .status-grid,
-  .test-grid {
+  .test-grid,
+  .parser-input-row,
+  .parse-facts {
     grid-template-columns: 1fr;
   }
 

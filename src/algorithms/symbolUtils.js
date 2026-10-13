@@ -1,7 +1,7 @@
 export const EPSILON_SYMBOLS = new Set(['ε', 'epsilon', 'eps', 'Epsilon', 'EPSILON', 'EPS'])
 
 export function isNonTerminal(symbol) {
-  return /^[A-Z][A-Z0-9']*$/.test(symbol)
+  return /^[A-Z][A-Za-z0-9']*$/.test(symbol)
 }
 
 export function isTerminal(symbol) {
@@ -9,7 +9,11 @@ export function isTerminal(symbol) {
 }
 
 export function formatProduction(lhs, rhsSymbols) {
-  return `${lhs} -> ${rhsSymbols.join('')}`
+  return `${lhs} -> ${rhsSymbols.join(' ')}`
+}
+
+export function formatSymbols(symbols) {
+  return symbols.join(' ')
 }
 
 export function uniqueSorted(values) {

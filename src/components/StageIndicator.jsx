@@ -1,9 +1,10 @@
-export default function StageIndicator({ parseOk, validationOk, setsReady, tableReady }) {
+export default function StageIndicator({ parseOk, validationOk, setsReady, tableReady, parserReady }) {
   const stages = [
     ['Grammar Input', parseOk],
     ['Validation', validationOk],
     ['LEADING/TRAILING', setsReady],
     ['Precedence Table', tableReady],
+    ['String Parsing', parserReady],
   ]
 
   return (
