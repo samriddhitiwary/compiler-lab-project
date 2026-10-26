@@ -319,6 +319,10 @@ pre,
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.status-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .step-controls {
   display: flex;
   align-items: center;
@@ -533,6 +537,221 @@ details.panel summary {
   color: #334155;
 }
 
+.regex-samples {
+  margin-top: 0.85rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.info-grid div {
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  padding: 0.85rem;
+  background: #fbfcff;
+}
+
+.info-grid span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #5b6778;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.info-grid strong {
+  overflow-wrap: anywhere;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+}
+
+.sample-label {
+  margin-top: 1rem;
+  margin-bottom: 0.45rem;
+}
+
+.stage-progress-panel {
+  background: #f7f9ff;
+}
+
+.rule-callout {
+  margin: 1rem 0;
+  padding: 0.9rem 1rem;
+  border-left: 4px solid #5274c7;
+  border-radius: 6px;
+  background: #f1f5ff;
+}
+
+.rule-callout h3 {
+  margin-top: 0;
+  color: #25488f;
+}
+
+.rule-callout p:last-child {
+  margin-bottom: 0;
+}
+
+.syntax-tree-scroll {
+  overflow-x: auto;
+  padding: 0.5rem;
+  min-height: 500px;
+  max-height: 650px;
+  border: 1px solid #dbe3ef;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #fbfcff, #f4f7fc);
+}
+
+.syntax-tree-svg {
+  display: block;
+  width: 100%;
+  min-width: 700px;
+  height: 500px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.syntax-tree-edge {
+  stroke: #94a3b8;
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.syntax-tree-node {
+  cursor: pointer;
+  outline: none;
+}
+
+.syntax-tree-node rect {
+  stroke-width: 1.5;
+  filter: drop-shadow(0 3px 5px rgba(39, 55, 92, 0.08));
+}
+
+.syntax-tree-node.operator rect {
+  fill: #eaf0ff;
+  stroke: #5274c7;
+}
+
+.syntax-tree-node.union rect {
+  fill: #f2efff;
+  stroke: #7564bd;
+}
+
+.syntax-tree-node.star rect {
+  fill: #fff8e8;
+  stroke: #b3832f;
+}
+
+.syntax-tree-node.leaf rect {
+  fill: #ffffff;
+  stroke: #8da0ba;
+}
+
+.syntax-tree-node.end-marker rect {
+  fill: #effaf4;
+  stroke: #5c9b79;
+}
+
+.syntax-tree-node.selected rect,
+.syntax-tree-node:focus rect {
+  stroke: #d97706;
+  stroke-width: 3;
+}
+
+.syntax-tree-symbol,
+.syntax-tree-type,
+.syntax-tree-attribute {
+  pointer-events: none;
+  fill: #16304f;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+}
+
+.syntax-tree-symbol {
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.syntax-tree-type {
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.syntax-tree-attribute {
+  fill: #526070;
+  font-size: 0.62rem;
+}
+
+.tree-controls {
+  align-self: flex-start;
+}
+
+.tree-details {
+  margin-top: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid #dbe3ef;
+  border-left: 4px solid #5274c7;
+  border-radius: 8px;
+  background: #f7f9ff;
+}
+
+.tree-details h3 {
+  margin: 0 0 0.6rem;
+  color: #16304f;
+}
+
+.tree-details-content {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem 1rem;
+}
+
+.tree-details-content div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.tree-details-content span {
+  color: #64748b;
+  font-size: 0.73rem;
+  text-transform: uppercase;
+}
+
+.tree-details-content strong {
+  color: #16304f;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+  overflow-wrap: anywhere;
+}
+
+.dfa-graph-wrap {
+  overflow-x: auto;
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  background: #fbfcff;
+}
+
+.edge-label,
+.state-label,
+.state-set-label {
+  fill: #16304f;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+}
+
+.state-label {
+  font-weight: 900;
+}
+
+.state-set-label {
+  font-size: 0.72rem;
+}
+
+.final-state-row td {
+  background: #effaf4;
+}
+
 @media (max-width: 860px) {
   .site-header,
   .hero-panel,
@@ -548,11 +767,16 @@ details.panel summary {
   .status-grid,
   .test-grid,
   .parser-input-row,
-  .parse-facts {
+  .parse-facts,
+  .info-grid {
     grid-template-columns: 1fr;
   }
 
   .input-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tree-details-content {
     grid-template-columns: 1fr;
   }
 }

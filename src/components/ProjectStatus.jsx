@@ -24,20 +24,38 @@ export default function ProjectStatus() {
   ]
 
   const planned = [
-    'RE syntax tree',
+    'Additional styling polish',
+    'More large-expression stress tests',
+  ]
+
+  const review3 = [
+    'RE input and validation',
+    'Explicit concatenation',
     'Augmented RE with #',
+    'Postfix conversion',
+    'Syntax tree',
+    'Polished SVG tree layout',
+    'Tree zoom and node details',
+    'Kleene closure input support',
+    'Nested Kleene closure support',
     'nullable',
     'firstpos',
     'lastpos',
     'followpos',
+    'STAR nullable/firstpos/lastpos rules',
+    'STAR followpos rule',
     'Direct DFA construction',
-    'DFA transition table',
+    'Transition table',
     'DFA visualization',
+    'DFA string simulation',
+    'Empty-string DFA testing',
+    'Final integration',
+    'Automated tests',
   ]
 
   return (
     <section className="panel status-panel">
-      <h2>Review 2 Status</h2>
+      <h2>Final Project Status</h2>
       <div className="status-grid">
         <div>
           <h3>Completed in Review 1</h3>
@@ -56,7 +74,15 @@ export default function ProjectStatus() {
           </ul>
         </div>
         <div>
-          <h3>Planned for Review 3</h3>
+          <h3>Completed in Review 3</h3>
+          <ul className="check-list">
+            {review3.map((item) => (
+              <li key={item}>✓ {item}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>Remaining Refinement</h3>
           <ul>
             {planned.map((item) => (
               <li key={item}>{item}</li>

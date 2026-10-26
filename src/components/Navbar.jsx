@@ -4,10 +4,10 @@ export default function Navbar({ activePage, setActivePage }) {
       <div>
         <p className="eyebrow">Project 8 | BCSE307P</p>
         <h1>Compiler Design Visualization Tool</h1>
-        <p className="subtitle">Interactive Operator Precedence Parser</p>
+        <p className="subtitle">Operator Precedence Parsing and RE to DFA Direct Method</p>
       </div>
       <nav className="main-nav" aria-label="Main navigation">
-        {['Home', 'Bottom-Up Parsing'].map((page) => (
+        {['Home', 'Bottom-Up Parsing', 'Regular Expression to DFA'].map((page) => (
           <button
             key={page}
             type="button"

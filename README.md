@@ -1,4 +1,4 @@
-# Interactive GUI for Operator Precedence Parsing
+# Compiler Design Visualization Tool
 
 Project 8 for BCSE307P Compiler Design Lab.
 
@@ -6,11 +6,14 @@ Student: Samriddhi Tiwary
 Registration Number: 23BCE0661  
 Department: SCOPE
 
-## Description
+## Project Overview
 
-This React + Vite application is a Compiler Design Visualization Tool for Operator Precedence Parsing. It runs completely in the browser with no backend or database.
+This React + Vite application visualizes two compiler-design workflows:
 
-This application supports valid operator-precedence grammars that can be represented by the project tokenizer. It is not intended to parse arbitrary context-free grammars.
+1. Bottom-Up Parsing using Operator Precedence Parsing
+2. Regular Expression to DFA conversion using the Direct Method
+
+All algorithms run locally in the browser. There is no backend, database, NFA construction, or hardcoded DFA.
 
 ## Review 1
 
@@ -19,90 +22,74 @@ Implemented:
 - Grammar input and parsing
 - Operator grammar validation
 - LEADING and TRAILING calculation
-- Step-by-step LEADING/TRAILING visualization
+- Step-by-step set visualization
 - Operator precedence table construction
-- Step-by-step relation insertion
 - Conflict detection
-- Grammar verdict
-- Sample grammars and reset functionality
 
 ## Review 2
 
 Implemented:
 
-- Input string tokenization using grammar terminals
-- Longest-match terminal recognition
-- Multi-character grammar symbols such as `Expr`, `Term`, `Factor`, and `id`
+- Generic input tokenization
 - Shift/reduce operator-precedence parser
-- Topmost-terminal comparison
+- Topmost-terminal detection
 - Handle boundary detection
-- Production-aware handle matching
-- Unit-production closure for final acceptance
-- Step-by-step parsing trace
-- Visual stack and handle highlighting
-- ACCEPT/REJECT result cards
-- Rejection reasons for invalid input, missing relations, conflicts, ambiguous handles, no matching handle, and parser cycles
-- Vitest unit tests for parser algorithms
+- Production matching
+- Parsing trace
+- ACCEPT/REJECT result
+- Parser loop protection
+- Automated parser tests
 
-## Parser Algorithm Summary
+## Review 3
 
-The parser initializes the stack as `$` and the input as tokens followed by `$`.
+Implemented:
 
-For each step:
+- Regular Expression input and validation
+- Explicit concatenation insertion
+- Augmented Regular Expression with `#`
+- Infix-to-postfix conversion
+- Syntax Tree construction
+- Polished adaptive SVG syntax-tree layout with zoom and node inspection
+- Leaf-position numbering
+- nullable, firstpos, lastpos
+- followpos table and update steps
+- Kleene closure, including nested/repeated `*`
+- Empty-string acceptance when the start state is final
+- Direct DFA construction
+- DFA transition table
+- DFA graph visualization
+- DFA string simulation, including empty-string testing
+- Automated direct-method tests, invariants, and exhaustive small-string cross-checks
 
-1. Find the rightmost terminal on the stack.
-2. Compare it with the next input terminal using the generated precedence table.
-3. If the relation is `<` or `=`, shift the input terminal.
-4. If the relation is `>`, search left through stack terminals until the nearest `<` boundary is found.
-5. Extract the handle, including any non-terminals between boundary terminals.
-6. Match the handle against grammar productions. Exact RHS matching is tried first, then operator-shape matching where non-terminals behave like placeholders.
-7. Replace the handle with the matched production LHS.
-8. Accept only when input is exhausted and the stack represents the start symbol, including valid unit-production closure.
+## Operator Precedence Parser Theory
 
-## Rejection Conditions
+The parser compares the topmost terminal on the stack with the next input terminal. A `<` or `=` relation means SHIFT. A `>` relation means REDUCE. During reduction, the parser scans left through stack terminals until it finds the nearest `<` boundary, extracts the handle, matches it with a grammar production, and replaces it by the production LHS.
 
-Parsing is rejected or disabled when:
+This module supports valid operator-precedence grammars representable by the tokenizer. It is not a general parser for arbitrary context-free grammars.
 
-- Grammar syntax is invalid
-- Operator grammar validation fails
-- LEADING/TRAILING or precedence table is unavailable
-- The precedence table contains conflicts
-- Input is empty
-- Input manually contains `$`
-- Input contains an unknown terminal
-- No precedence relation exists for the current terminal pair
-- A handle cannot be matched to a production
-- A reduction is ambiguous
-- A non-progressing parser cycle is detected
-- The parser exceeds its maximum step limit
-- Final stack does not represent the grammar start symbol
+## RE to DFA Direct Method Theory
 
-## Technologies
+The Direct Method constructs a DFA directly from the augmented regular-expression syntax tree.
 
-- React
-- Vite
-- JavaScript
-- CSS
-- Vitest
+1. Tokenize and validate the Regular Expression.
+2. Insert explicit concatenation operators.
+3. Augment the expression as `(r).#`.
+4. Convert infix expression to postfix.
+5. Build the Syntax Tree from postfix.
+6. Assign a unique leaf position to every non-epsilon symbol, including `#`.
+7. Compute nullable, firstpos, and lastpos bottom-up.
+8. Compute followpos using only concatenation and Kleene-star rules.
+9. Use firstpos(root) as the initial DFA state.
+10. For each state and alphabet symbol, union followpos of matching positions to form transitions.
+11. Mark every state containing the `#` position as final.
 
-## Installation
+For `R*`, the direct method applies `nullable = true`, copies the child `firstpos` and `lastpos`, and adds `firstpos(R)` to `followpos(i)` for each `i` in `lastpos(R)`. The page exposes the workflow through Previous, Next Step, Compute All, and Reset Steps controls.
 
-```bash
-npm install
-npm run dev
-```
+Epsilon has no leaf position. Repeated symbols receive separate positions.
 
-## Testing
+## Supported Grammar Notation
 
-```bash
-npm test
-npm run build
-npm run lint
-```
-
-## Example Grammars
-
-Compact notation:
+Compact:
 
 ```txt
 E -> E+T | T
@@ -110,7 +97,7 @@ T -> T*F | F
 F -> (E) | i
 ```
 
-Token-separated notation:
+Token-separated:
 
 ```txt
 Expr -> Expr '+' Term | Term
@@ -118,35 +105,99 @@ Term -> Term '*' Factor | Factor
 Factor -> '(' Expr ')' | 'id'
 ```
 
-Example inputs:
+## Supported Regular Expression Syntax
 
-```txt
-i+i*i
-(i+i)*i
-id + id * id
+- Union: `|`
+- Concatenation: implicit in input, explicit as `.` internally
+- Kleene star: `*`
+- Grouping: `( )`
+- Epsilon: `ε`, `epsilon`, or `eps`
+- Quoted multi-character symbols: `'id'`, `'num'`
+
+The user must not enter `#`; it is reserved for augmentation.
+
+## Installation
+
+```bash
+npm install
 ```
 
-## Project Directory Structure
+## Running Project
+
+```bash
+npm run dev
+```
+
+## Running Tests
+
+```bash
+npm test
+npm run build
+npm run lint
+```
+
+## Example Regular Expressions
+
+```txt
+a
+a*
+a|b
+ab
+(a|b)*
+(a|b)*abb
+a(b|c)*
+(ab)*
+a**
+a|ε
+'id'|'num'
+```
+
+## Known Limitations
+
+- The Operator Precedence Parser is for valid operator-precedence grammars, not arbitrary CFGs.
+- The RE module supports direct-method operators `|`, concatenation, `*`, grouping, and epsilon.
+- Extended operators such as `+` and `?` are intentionally not enabled to keep the direct-method implementation focused and testable.
+- Very large expressions are limited to protect the browser from excessive syntax-tree or DFA growth.
+
+## Final Directory Structure
 
 ```txt
 src/
   algorithms/
     __tests__/
       operatorPrecedenceParser.test.js
+      regexDirectMethod.test.js
+    concatenationInserter.js
+    dfaSimulator.js
+    directDfa.js
+    followpos.js
     grammarParser.js
     grammarValidator.js
     handleFinder.js
+    infixToPostfix.js
     inputTokenizer.js
     leading.js
     operatorPrecedenceParser.js
     precedenceTable.js
     productionMatcher.js
+    regexDirectMethod.js
+    regexTokenizer.js
+    regexValidator.js
     symbolUtils.js
+    syntaxTree.js
+    syntaxTreeAttributes.js
     trailing.js
     unitProductionUtils.js
   components/
+    AttributeTable.jsx
     ComputationExplanation.jsx
     ConflictAlert.jsx
+    DfaConstructionSteps.jsx
+    DfaGraph.jsx
+    DfaSimulationTrace.jsx
+    DfaStringTester.jsx
+    DfaTransitionTable.jsx
+    FollowposTable.jsx
     GrammarInput.jsx
     GrammarValidation.jsx
     LeadingTrailingTable.jsx
@@ -157,25 +208,15 @@ src/
     ParsingTrace.jsx
     PrecedenceTable.jsx
     ProjectStatus.jsx
+    RegexInput.jsx
+    RegexSteps.jsx
     StageIndicator.jsx
     StepControls.jsx
     StringInput.jsx
-  data/
-    sampleGrammars.js
+    SyntaxTreeView.jsx
   pages/
     BottomUpParsing.jsx
     Home.jsx
     OperatorPrecedence.jsx
-  App.jsx
-  index.css
-  main.jsx
+    RegexToDFA.jsx
 ```
-
-## Future Work
-
-- RE syntax tree
-- Augmented RE with `#`
-- nullable, firstpos, lastpos, followpos
-- Direct DFA construction
-- DFA transition table and visualization
-- Complete project integration
